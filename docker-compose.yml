@@ -38,7 +38,7 @@ services:
     depends_on:
       - postgres
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:8080/health/live"]
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
     environment:
       - KC_DB=postgres
       - KC_DB_USERNAME=keycloak
