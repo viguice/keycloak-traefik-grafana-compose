@@ -296,18 +296,18 @@
       "clientId": "grafana",
       "name": "grafana",
       "description": "grafana",
-      "rootUrl": "${GRAFANA_HOST}",
-      "adminUrl": "${GRAFANA_HOST}",
-      "baseUrl": "${GRAFANA_HOST}",
+      "rootUrl": "${GRAFANA_URL}",
+      "adminUrl": "${GRAFANA_URL}",
+      "baseUrl": "${GRAFANA_URL}",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "${GRAFANA_HOST}/*"
+        "${GRAFANA_URL}/*"
       ],
       "webOrigins": [
-        "${GRAFANA_HOST}"
+        "${GRAFANA_URL}"
       ],
       "notBefore": 0,
       "bearerOnly": false,
