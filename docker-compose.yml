@@ -33,8 +33,7 @@ services:
 
   keycloak:
     image: "quay.io/keycloak/keycloak:${KC_VERSION}"
-    command: ["start-dev", "-Dkeycloak.import=/opt/keycloak/data/import/realm.json"]
-#    command: ["start-dev", "--import-realm"] # new command for 18.0.0 keycloak that contain auto import realm at startup
+    command: ["start-dev", "--import-realm"]
     restart: unless-stopped
     depends_on:
       - postgres
@@ -49,6 +48,9 @@ services:
       - KC_FEATURES=${KC_FEATURES}
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=${KC_PASSWORD}
+      - KC_REALM_NAME=${KC_REALM_NAME}
+      - GRAFANA_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+      - GRAFANA_URL=${GRAFANA_URL}
     ports:
       - ${KC_PORT}:8080
     volumes:
@@ -119,9 +121,9 @@ services:
       - GF_AUTH_GENERIC_OAUTH_CLIENT_ID=grafana
       - GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_NAME=email:primary
       - GF_AUTH_GENERIC_OAUTH_SCOPES=openid profile email
-      - GF_AUTH_GENERIC_OAUTH_AUTH_URL=${GRAFANA_KC_HOST}/realms/${GRAFANA_KC_REALM}/protocol/openid-connect/auth
-      - GF_AUTH_GENERIC_OAUTH_TOKEN_URL=${GRAFANA_KC_HOST}/realms/${GRAFANA_KC_REALM}/protocol/openid-connect/token
-      - GF_AUTH_GENERIC_OAUTH_API_URL=${GRAFANA_KC_HOST}/realms/${GRAFANA_KC_REALM}/protocol/openid-connect/userinfo
+      - GF_AUTH_GENERIC_OAUTH_AUTH_URL=${GRAFANA_KC_HOST}/realms/${KC_REALM_NAME}/protocol/openid-connect/auth
+      - GF_AUTH_GENERIC_OAUTH_TOKEN_URL=${GRAFANA_KC_HOST}/realms/${KC_REALM_NAME}/protocol/openid-connect/token
+      - GF_AUTH_GENERIC_OAUTH_API_URL=${GRAFANA_KC_HOST}/realms/${KC_REALM_NAME}/protocol/openid-connect/userinfo
     volumes:
       - ./monitoring/prometheus-datasource.yml:/etc/grafana/provisioning/datasources/prometheus-datasource.yml:ro
       - ./monitoring/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml:ro
