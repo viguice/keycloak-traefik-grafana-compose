@@ -8,15 +8,15 @@
           {
             "temporary": false,
             "type": "password",
-            "value": "grafana"
+            "value": "${GRAFANA_ADMIN_PASSWORD}"
           }
         ]
       }
   ],
-  "id": "test",
-  "realm": "test",
-  "displayName": "test",
-  "displayNameHtml": "test",
+  "id": "${KC_REALM_NAME}",
+  "realm": "${KC_REALM_NAME}",
+  "displayName": "${KC_REALM_NAME}",
+  "displayNameHtml": "${KC_REALM_NAME}",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
   "revokeRefreshToken": false,
@@ -61,7 +61,7 @@
   "failureFactor": 30,
   "defaultRole": {
     "id": "546218fa-de37-441e-821a-3645bd7ed4ea",
-    "name": "default-roles-test",
+    "name": "default-roles-${KC_REALM_NAME}",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
@@ -128,13 +128,13 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/test/account/",
+      "baseUrl": "/realms/${KC_REALM_NAME}/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/test/account/*"
+        "/realms/${KC_REALM_NAME}/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -169,13 +169,13 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/test/account/",
+      "baseUrl": "/realms/${KC_REALM_NAME}/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/test/account/*"
+        "/realms/${KC_REALM_NAME}/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -296,18 +296,18 @@
       "clientId": "grafana",
       "name": "grafana",
       "description": "grafana",
-      "rootUrl": "http://localhost:3000",
-      "adminUrl": "http://localhost:3000",
-      "baseUrl": "http://localhost:3000",
+      "rootUrl": "${GRAFANA_HOST}",
+      "adminUrl": "${GRAFANA_HOST}",
+      "baseUrl": "${GRAFANA_HOST}",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "http://localhost:3000/*"
+        "${GRAFANA_HOST}/*"
       ],
       "webOrigins": [
-        "http://localhost:3000"
+        "${GRAFANA_HOST}"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -382,13 +382,13 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/test/console/",
+      "baseUrl": "/admin/${KC_REALM_NAME}/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/admin/test/console/*"
+        "/admin/${KC_REALM_NAME}/console/*"
       ],
       "webOrigins": [
         "+"
@@ -1797,7 +1797,7 @@
     "parRequestUriLifespan": "60",
     "cibaInterval": "5"
   },
-  "keycloakVersion": "17.0.0",
+  "keycloakVersion": "18.0.0",
   "userManagedAccessAllowed": false,
   "clientProfiles": {
     "profiles": []
