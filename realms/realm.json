@@ -1,9 +1,9 @@
 {
   "users": [
       {
-        "email": "admin@admin.com",
+        "email": "${GRAFANA_ADMIN_USERNAME}@admin.com",
         "enabled": true,
-        "username": "admin",
+        "username": "${GRAFANA_ADMIN_USERNAME}",
         "credentials": [
           {
             "temporary": false,
