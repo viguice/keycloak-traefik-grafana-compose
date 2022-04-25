@@ -11,7 +11,7 @@
 
 | App | Port 
 |-|-
-| Prometheus | 8090
+| Prometheus | 9090
 
 ![Prometheus Targets](./images/prometheus.jpg)
 
