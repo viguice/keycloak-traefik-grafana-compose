@@ -2,7 +2,7 @@
 2. Parameterized using variables in the `.env` file
 3. Up the project using command `docker compose up -d --wait`
 
-| Command | Discription
+| Useful commands | Discription
 |-|-
 | `docker stats --no-stream` | Containers resource usage
 | `docker compose logs` | Shows logs of containers (use flag `-f` to follow logs)
