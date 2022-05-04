@@ -10,20 +10,8 @@
 
 ## Links and images
 
-| App | Port | Username | Password 
-|-|-|-|-
-| Keycloak | 8080 | `admin` | `keycloak`
-
-![Keycloak Grafana Client in the realm test](./images/keycloak.jpg)
-
-| App | Port 
-|-|-
-| Prometheus | 9090
-
-![Prometheus Targets](./images/prometheus.jpg)
-
-| App | Port | Username | Password 
-|-|-|-|-
-| Grafana | 3000 | `admin` | `grafana`
-
-![Grafana Keycloak Dashboard](./images/grafana.png)
+| App | Port | Username | Password | Image
+|-|-|-|-|-
+| Keycloak | 8080 | `admin` | `keycloak` | ![Keycloak Grafana Client in the realm test](./images/keycloak.jpg)
+| Prometheus | 9090 | | | ![Prometheus Targets](./images/prometheus.jpg)
+| Grafana | 3000 | `admin` | `grafana` | ![Grafana Keycloak Dashboard](./images/grafana.png)
