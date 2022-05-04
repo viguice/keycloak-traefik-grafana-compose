@@ -8,8 +8,6 @@
 | `docker compose down` | Stop and remove containers (flag `-v` remove named volumes declared in the volumes section of the Compose file and anonymous volumes attached to containers)
 | `docker system prune -a -f` | Remove all unused containers, networks, images (flag `--volumes` prune volumes)
 
-## Links and images
-
 | App | Port | Username | Password | Image
 |-|-|-|-|-
 | Keycloak | 8080 | `admin` | `keycloak` | ![Keycloak Grafana Client in the realm test](./images/keycloak.jpg)
