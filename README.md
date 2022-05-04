@@ -1,5 +1,6 @@
 1. Requires [Docker](https://docs.docker.com/engine/install/) with [Compose](https://github.com/docker/compose/releases/latest)
-2. Up the project using command `docker compose up -d --wait`
+2. Parameterized using variables in the `.env` file
+3. Up the project using command `docker compose up -d --wait`
 
 | Command | Discription
 |-|-
