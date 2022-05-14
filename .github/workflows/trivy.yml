@@ -23,7 +23,7 @@ jobs:
       contents: read # for actions/checkout to fetch code
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
     name: Build
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-22.04"
     steps:
       - name: Checkout GitHub code
         uses: actions/checkout@v2
@@ -36,9 +36,10 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'quay.io/keycloak/keycloak:${{ steps.getversion.outputs.version }}'
-          format: 'template'
-          template: '@/contrib/sarif.tpl'
-          output: 'trivy-keycloak.sarif'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          exit-code: '1'
+          ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
 
       - name: Upload scan Keycloak results to GitHub Security tab
