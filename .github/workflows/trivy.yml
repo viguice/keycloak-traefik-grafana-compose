@@ -36,8 +36,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'quay.io/keycloak/keycloak:${{ steps.getversion.outputs.version }}'
-          format: 'template'
-          template: '@/contrib/sarif.tpl'
+          format: 'sarif'
           output: 'trivy-keycloak.sarif'
           ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
