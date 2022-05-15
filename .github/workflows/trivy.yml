@@ -32,7 +32,6 @@ jobs:
           image-ref: 'quay.io/keycloak/keycloak:${{ steps.getversion.outputs.version }}'
           format: 'sarif'
           output: 'trivy-keycloak.sarif'
-          ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
 
       - name: Upload scan Keycloak results to GitHub Security tab
