@@ -1,1 +1,7 @@
 theme: jekyll-theme-minimal
+logo: https://www.keycloak.org/resources/images/keycloak_logo_200px.svg
+
+owner:
+  name: Evgeny Bykov
+  avatar: https://avatars.githubusercontent.com/u/44170496?v=4
+  email: jenyabykov322@yandex.ru
