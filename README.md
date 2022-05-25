@@ -1,3 +1,7 @@
+[![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)
+[![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg)
+![example workflow](https://github.com/eabykov/keycloak-compose/actions/workflows/trivy.yml/badge.svg)
+
 1. Requires [Docker](https://docs.docker.com/engine/install/) with [Compose](https://docs.docker.com/compose/install/)
 2. Parameterized using variables in the `.env` file
 3. Up the project using command `docker compose up -d --wait`
