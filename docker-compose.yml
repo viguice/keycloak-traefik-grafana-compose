@@ -115,6 +115,7 @@ services:
     environment:
       - GF_PLUGINS_ENABLE_ALPHA=true
       - GF_PLUGINS_PLUGIN_ADMIN_ENABLED=true
+      - GF_INSTALL_PLUGINS=grafana-flowcharting
       - GF_LOG_MODE=console
       - GF_AUTH_BASIC_ENABLED=true
       - GF_AUTH_GENERIC_OAUTH_TLS_SKIP_VERIFY_INSECURE=true
