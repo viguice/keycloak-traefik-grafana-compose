@@ -27,7 +27,7 @@ jobs:
         run: echo "::set-output name=version::$(grep 'KC_VERSION' .env | cut -d'=' -f2 | cut -d'#' -f1)"
 
       - name: Scan Keycloak with Trivy
-        uses: aquasecurity/trivy-action@f19243127a068889a19bd4aa34cbf7858e5dd33d
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'quay.io/keycloak/keycloak:${{ steps.getversion.outputs.version }}'
           format: 'sarif'
