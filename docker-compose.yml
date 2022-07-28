@@ -46,6 +46,7 @@ services:
       - KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak
       - KC_METRICS_ENABLED=true
       - KC_HEALTH_ENABLED=true
+      - KC_LOG=console # can use 'gelf' https://www.keycloak.org/server/logging#_centralized_logging_using_gelf
       - KC_LOG_LEVEL=${KC_LOG_LEVEL}
       - KC_LOG_CONSOLE_OUTPUT=json
       - KC_FEATURES=${KC_FEATURES}
