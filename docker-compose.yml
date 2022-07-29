@@ -114,7 +114,7 @@ services:
       interval: 1s
       timeout: 10s
     environment:
-      - GF_HTTP_PORT=${GF_HTTP_PORT}
+      - GF_SERVER_HTTP_PORT=${GF_SERVER_HTTP_PORT}
       - GF_PLUGINS_ENABLE_ALPHA=true
       - GF_PLUGINS_PLUGIN_ADMIN_ENABLED=true
       - GF_LOG_MODE=console
