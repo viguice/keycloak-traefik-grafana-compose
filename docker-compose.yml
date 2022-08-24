@@ -8,7 +8,7 @@ x-logging-json:
 
 services:
   postgres:
-    image: "postgres:${POSTGRES_VERSION}"
+    image: "postgres:14.4-alpine" # https://www.postgresql.org/docs/release
     healthcheck:
       test: ["CMD", "nc", "-zv", "localhost", "5432"]
       interval: 1s
@@ -32,7 +32,7 @@ services:
     logging: *json-logging
 
   keycloak:
-    image: "quay.io/keycloak/keycloak:${KC_VERSION}"
+    image: "quay.io/keycloak/keycloak:19.0.1" # https://github.com/keycloak/keycloak/releases
     command: ["start-dev", "--import-realm"]
     restart: unless-stopped
     depends_on:
@@ -73,7 +73,7 @@ services:
     logging: *json-logging
 
   prometheus:
-    image: "prom/prometheus:${PROMETHEUS_VERSION}"
+    image: "prom/prometheus:v2.38.0" # https://github.com/prometheus/prometheus/releases
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -104,7 +104,7 @@ services:
     logging: *json-logging
 
   grafana:
-    image: "grafana/grafana:${GRAFANA_VERSION}"
+    image: "grafana/grafana:9.1.0" # https://github.com/grafana/grafana/releases
     restart: unless-stopped
     network_mode: host
     depends_on:
