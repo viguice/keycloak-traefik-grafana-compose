@@ -2,8 +2,7 @@
 
 1. Requires [Docker](https://docs.docker.com/engine/install/) with [Compose](https://docs.docker.com/compose/install/)
 2. Parameterized using variables in the `.env` file
-3. Versions specified in the `docker-compose.yml` file
-4. Up the project using command `docker compose up -d --wait`
+3. Up the project using command `docker compose up -d --wait`
 
 | Useful commands | Discription
 |-|-
