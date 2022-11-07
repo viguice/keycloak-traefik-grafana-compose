@@ -10,9 +10,10 @@ services:
   postgres:
     image: "postgres:${POSTGRES_VERSION}"
     healthcheck:
-      test: ["CMD", "nc", "-zv", "localhost", "5432"]
-      interval: 1s
-      timeout: 10s
+      test: ["CMD", "pg_isready", "-U", "keycloak"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
@@ -23,8 +24,8 @@ services:
     deploy:
       resources:
         limits:
+          memory: 500m
           cpus: '0.5'
-          memory: 525M
     security_opt:
       - no-new-privileges:true
     networks:
@@ -63,8 +64,8 @@ services:
     deploy:
       resources:
         limits:
+          memory: 500m
           cpus: '0.5'
-          memory: 1100M
     security_opt:
       - no-new-privileges:true
     networks:
@@ -95,8 +96,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 525M
+          memory: 500m
+          cpus: '0.5'
     security_opt:
       - no-new-privileges:true
     networks:
@@ -137,8 +138,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
-          memory: 1100M
+          memory: 500m
+          cpus: '0.5'
     security_opt:
       - no-new-privileges:true
     logging: *json-logging
