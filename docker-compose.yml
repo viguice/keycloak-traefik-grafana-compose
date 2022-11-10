@@ -1,10 +1,47 @@
----
-x-logging-json:
-  &json-logging
+version: "3.9"
+
+x-logging: &logging
   driver: "json-file"
   options:
     max-size: "10m"
     max-file: "10"
+
+x-environment: &environment
+  POSTGRES_DB: keycloak
+  POSTGRES_USER: keycloak
+  POSTGRES_PASSWORD: password
+  PGPASSWORD: password
+  KC_DB: postgres
+  KC_DB_USERNAME: keycloak
+  KC_DB_PASSWORD: password
+  KC_DB_URL: "jdbc:postgresql://postgres:5432/keycloak"
+  KC_METRICS_ENABLED: true
+  KC_HEALTH_ENABLED: true
+  KC_LOG: console
+  KC_LOG_LEVEL: ${KC_LOG_LEVEL}
+  KC_FEATURES: ${KC_FEATURES}
+  KC_REALM_NAME: ${KC_REALM_NAME}
+  KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+  KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+  GRAFANA_ADMIN_USERNAME: ${GRAFANA_ADMIN_USERNAME}
+  GRAFANA_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+  GRAFANA_URL: ${GRAFANA_HOSTNAME}:${GF_SERVER_HTTP_PORT}
+  GF_SERVER_HTTP_PORT: ${GF_SERVER_HTTP_PORT}
+  GF_PLUGINS_ENABLE_ALPHA: true
+  GF_PLUGINS_PLUGIN_ADMIN_ENABLED: true
+  GF_LOG_MODE: console
+  GF_AUTH_BASIC_ENABLED: true
+  GF_AUTH_DISABLE_LOGIN_FORM: true
+  GF_AUTH_GENERIC_OAUTH_TLS_SKIP_VERIFY_INSECURE: true
+  GF_AUTH_GENERIC_OAUTH_ENABLED: true
+  GF_AUTH_GENERIC_OAUTH_NAME: Keycloak
+  GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP: true
+  GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
+  GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_NAME: "email:primary"
+  GF_AUTH_GENERIC_OAUTH_SCOPES: "openid profile email"
+  GF_AUTH_GENERIC_OAUTH_AUTH_URL: ${KC_URL}/realms/${KC_REALM_NAME}/protocol/openid-connect/auth
+  GF_AUTH_GENERIC_OAUTH_TOKEN_URL: ${KC_URL}/realms/${KC_REALM_NAME}/protocol/openid-connect/token
+  GF_AUTH_GENERIC_OAUTH_API_URL: ${KC_URL}/realms/${KC_REALM_NAME}/protocol/openid-connect/userinfo
 
 services:
   postgres:
@@ -14,11 +51,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: password
-      PGPASSWORD: password
+    environment: *environment
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     deploy:
@@ -30,7 +63,7 @@ services:
       - no-new-privileges:true
     networks:
       - keycloak
-    logging: *json-logging
+    logging: *logging
 
   keycloak:
     image: "quay.io/keycloak/keycloak:${KC_VERSION}"
@@ -41,22 +74,7 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health/ready"]
-    environment:
-      KC_DB: postgres
-      KC_DB_USERNAME: keycloak
-      KC_DB_PASSWORD: password
-      KC_DB_URL: "jdbc:postgresql://postgres:5432/keycloak"
-      KC_METRICS_ENABLED: true
-      KC_HEALTH_ENABLED: true
-      KC_LOG: console # can use 'gelf' https://www.keycloak.org/server/logging#_centralized_logging_using_gelf
-      KC_LOG_LEVEL: ${KC_LOG_LEVEL}
-      KC_FEATURES: ${KC_FEATURES}
-      KC_REALM_NAME: ${KC_REALM_NAME}
-      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
-      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-      GRAFANA_ADMIN_USERNAME: ${GRAFANA_ADMIN_USERNAME}
-      GRAFANA_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
-      GRAFANA_URL: ${GRAFANA_HOSTNAME}:${GF_SERVER_HTTP_PORT}
+    environment: *environment
     ports:
       - ${KC_PORT}:8080
     volumes:
@@ -71,7 +89,7 @@ services:
     networks:
       - keycloak
       - monitoring
-    logging: *json-logging
+    logging: *logging
 
   prometheus:
     image: "prom/prometheus:${PROMETHEUS_VERSION}"
@@ -103,7 +121,7 @@ services:
       - no-new-privileges:true
     networks:
       - monitoring
-    logging: *json-logging
+    logging: *logging
 
   grafana:
     image: "grafana/grafana:${GRAFANA_VERSION}"
@@ -117,22 +135,6 @@ services:
       interval: 1s
       timeout: 10s
     environment:
-      GF_SERVER_HTTP_PORT: ${GF_SERVER_HTTP_PORT}
-      GF_PLUGINS_ENABLE_ALPHA: true
-      GF_PLUGINS_PLUGIN_ADMIN_ENABLED: true
-      GF_LOG_MODE: console
-      GF_AUTH_BASIC_ENABLED: true
-      GF_AUTH_DISABLE_LOGIN_FORM: true
-      GF_AUTH_GENERIC_OAUTH_TLS_SKIP_VERIFY_INSECURE: true
-      GF_AUTH_GENERIC_OAUTH_ENABLED: true
-      GF_AUTH_GENERIC_OAUTH_NAME: Keycloak
-      GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP: true
-      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
-      GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_NAME: "email:primary"
-      GF_AUTH_GENERIC_OAUTH_SCOPES: "openid profile email"
-      GF_AUTH_GENERIC_OAUTH_AUTH_URL: ${KC_URL}/realms/${KC_REALM_NAME}/protocol/openid-connect/auth
-      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: ${KC_URL}/realms/${KC_REALM_NAME}/protocol/openid-connect/token
-      GF_AUTH_GENERIC_OAUTH_API_URL: ${KC_URL}/realms/${KC_REALM_NAME}/protocol/openid-connect/userinfo
     volumes:
       - ./monitoring/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
       - ./monitoring/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml:ro
@@ -144,7 +146,7 @@ services:
           cpus: '0.5'
     security_opt:
       - no-new-privileges:true
-    logging: *json-logging
+    logging: *logging
 
 networks:
   keycloak:
