@@ -57,8 +57,6 @@ services:
           cpus: '0.5'
     security_opt:
       - no-new-privileges:true
-    networks:
-      - keycloak
     logging: *logging
 
   keycloak:
@@ -85,9 +83,6 @@ services:
           cpus: '0.5'
     security_opt:
       - no-new-privileges:true
-    networks:
-      - keycloak
-      - monitoring
     logging: *logging
 
   prometheus:
@@ -119,8 +114,6 @@ services:
           cpus: '0.5'
     security_opt:
       - no-new-privileges:true
-    networks:
-      - monitoring
     logging: *logging
 
   grafana:
@@ -148,10 +141,6 @@ services:
     security_opt:
       - no-new-privileges:true
     logging: *logging
-
-networks:
-  keycloak:
-  monitoring:
 
 volumes:
   prometheus_data: {}
