@@ -17,7 +17,6 @@ x-environment: &environment
   KC_DB_URL: "jdbc:postgresql://postgres:5432/keycloak"
   KC_METRICS_ENABLED: true
   KC_HEALTH_ENABLED: true
-  KC_LOG: console
   KC_LOG_LEVEL: ${KC_LOG_LEVEL}
   KC_FEATURES: ${KC_FEATURES}
   KC_REALM_NAME: ${KC_REALM_NAME}
@@ -27,9 +26,6 @@ x-environment: &environment
   GRAFANA_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
   GRAFANA_URL: ${GRAFANA_HOSTNAME}:${GF_SERVER_HTTP_PORT}
   GF_SERVER_HTTP_PORT: ${GF_SERVER_HTTP_PORT}
-  GF_PLUGINS_ENABLE_ALPHA: true
-  GF_PLUGINS_PLUGIN_ADMIN_ENABLED: true
-  GF_LOG_MODE: console
   GF_AUTH_BASIC_ENABLED: true
   GF_AUTH_DISABLE_LOGIN_FORM: true
   GF_AUTH_GENERIC_OAUTH_TLS_SKIP_VERIFY_INSECURE: true
@@ -74,6 +70,9 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     environment: *environment
     ports:
       - ${KC_PORT}:8080
@@ -105,8 +104,9 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "--tries=1", "--spider", "http://localhost:9090"]
-      interval: 1s
-      timeout: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - ${PROMETHEUS_PORT}:9090
     volumes:
@@ -132,9 +132,10 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "--tries=1", "--spider", "http://localhost:${GF_SERVER_HTTP_PORT}"]
-      interval: 1s
-      timeout: 10s
-    environment:
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment: *environment
     volumes:
       - ./monitoring/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
       - ./monitoring/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml:ro
