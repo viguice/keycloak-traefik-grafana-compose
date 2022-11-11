@@ -1,18 +1,4 @@
 {
-  "users": [
-      {
-        "email": "${GRAFANA_ADMIN_USERNAME}@admin.com",
-        "username": "${GRAFANA_ADMIN_USERNAME}",
-        "enabled": true,
-        "credentials": [
-          {
-            "temporary": false,
-            "type": "password",
-            "value": "${GRAFANA_ADMIN_PASSWORD}"
-          }
-        ]
-      }
-  ],
   "id": "${KC_REALM_NAME}",
   "realm": "${KC_REALM_NAME}",
   "sslRequired": "none",
@@ -31,6 +17,20 @@
       ],
       "webOrigins": [
         "${GRAFANA_URL}"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "email": "${GRAFANA_ADMIN_USERNAME}@admin.com",
+      "username": "${GRAFANA_ADMIN_USERNAME}",
+      "enabled": true,
+      "credentials": [
+        {
+          "temporary": false,
+          "type": "password",
+          "value": "${GRAFANA_ADMIN_PASSWORD}"
+        }
       ]
     }
   ]
