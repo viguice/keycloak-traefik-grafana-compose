@@ -1,5 +1,3 @@
-> The official developer [Dominik Guhr](https://github.com/DGuhr) of the Keycloak from Red Hat has put an star on this repository
-
 1. Requires [Docker](https://docs.docker.com/engine/install/) with [Compose](https://docs.docker.com/compose/install/)
 2. Parameterized using variables in the [`.env`](./.env) file
 3. Up the project using command:
