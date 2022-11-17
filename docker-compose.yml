@@ -15,7 +15,6 @@ x-environment: &environment
   KC_DB_URL: "jdbc:postgresql://postgres:5432/keycloak"
   KC_METRICS_ENABLED: true
   KC_HEALTH_ENABLED: true
-  KC_LOG_LEVEL: ${KC_LOG_LEVEL}
   KC_FEATURES: ${KC_FEATURES}
   KC_REALM_NAME: ${KC_REALM_NAME}
   KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
