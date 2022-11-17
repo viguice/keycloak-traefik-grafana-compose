@@ -9,27 +9,27 @@
       "clientId": "grafana",
       "name": "grafana",
       "enabled": true,
-      "rootUrl": "${GRAFANA_URL}",
-      "adminUrl": "${GRAFANA_URL}",
-      "baseUrl": "${GRAFANA_URL}",
+      "rootUrl": "${GF_URL}",
+      "adminUrl": "${GF_URL}",
+      "baseUrl": "${GF_URL}",
       "redirectUris": [
-        "${GRAFANA_URL}/*"
+        "${GF_URL}/*"
       ],
       "webOrigins": [
-        "${GRAFANA_URL}"
+        "${GF_URL}"
       ]
     }
   ],
   "users": [
     {
-      "email": "${GRAFANA_ADMIN_USERNAME}@admin.com",
-      "username": "${GRAFANA_ADMIN_USERNAME}",
+      "email": "${GF_ADMIN_USERNAME}@admin.com",
+      "username": "${GF_ADMIN_USERNAME}",
       "enabled": true,
       "credentials": [
         {
           "temporary": false,
           "type": "password",
-          "value": "${GRAFANA_ADMIN_PASSWORD}"
+          "value": "${GF_ADMIN_PASSWORD}"
         }
       ]
     }
