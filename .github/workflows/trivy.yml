@@ -24,7 +24,7 @@ jobs:
 
       - name: Read Keycloak version from .env file
         id: getversion
-        run: echo "::set-output name=version::$(grep 'KC_VERSION' .env | cut -d'=' -f2 | cut -d'#' -f1)"
+        run: echo "version=$(grep 'KC_VERSION' .env | cut -d'=' -f2 | cut -d'#' -f1)" >> $GITHUB_OUTPUT
 
       - name: Scan Keycloak with Trivy
         uses: aquasecurity/trivy-action@master
