@@ -13,6 +13,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 5s
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
@@ -38,6 +39,7 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health/ready"]
+      start_period: 10s
     environment:
       KC_DB: postgres
       KC_DB_USERNAME: keycloak
@@ -83,6 +85,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 5s
     ports:
       - mode: ingress
         target: 9090
@@ -109,6 +112,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 5s
     environment:
       GF_SERVER_HTTP_PORT: ${GF_SERVER_HTTP_PORT}
       GF_AUTH_BASIC_ENABLED: true
