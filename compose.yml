@@ -7,6 +7,7 @@ x-logging: &logging
 services:
   postgres:
     image: "postgres:${POSTGRES_VERSION}"
+    restart: unless-stopped
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "keycloak"]
       interval: 10s
@@ -23,8 +24,6 @@ services:
         limits:
           memory: 500m
           cpus: '0.5'
-    security_opt:
-      - no-new-privileges:true
     logging: *logging
 
   keycloak:
@@ -62,8 +61,6 @@ services:
         limits:
           memory: 500m
           cpus: '0.5'
-    security_opt:
-      - no-new-privileges:true
     logging: *logging
 
   prometheus:
@@ -95,8 +92,6 @@ services:
         limits:
           memory: 500m
           cpus: '0.5'
-    security_opt:
-      - no-new-privileges:true
     logging: *logging
 
   grafana:
@@ -134,6 +129,4 @@ services:
         limits:
           memory: 500m
           cpus: '0.5'
-    security_opt:
-      - no-new-privileges:true
     logging: *logging
