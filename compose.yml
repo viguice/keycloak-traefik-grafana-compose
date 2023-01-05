@@ -2,7 +2,7 @@ x-logging: &logging
   driver: "json-file"
   options:
     max-size: "10m"
-    max-file: "10"
+    max-file: "3"
 
 services:
   postgres:
