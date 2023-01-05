@@ -49,15 +49,15 @@ services:
       KC_HEALTH_ENABLED: true
       KC_FEATURES: ${KC_FEATURES}
       KC_REALM_NAME: ${KC_REALM_NAME}
-      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
-      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-      GF_URL: ${GF_HOSTNAME}:${GF_SERVER_HTTP_PORT}
-      GF_ADMIN_USERNAME: ${GF_ADMIN_USERNAME}
-      GF_ADMIN_PASSWORD: ${GF_ADMIN_PASSWORD}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-keycloak}
+      GF_URL: ${GF_HOSTNAME}:${GF_SERVER_HTTP_PORT:-3000}
+      GF_ADMIN_USERNAME: ${GF_ADMIN_USERNAME:-admin}
+      GF_ADMIN_PASSWORD: ${GF_ADMIN_PASSWORD:-grafana}
     ports:
       - mode: ingress
         target: 8080
-        published: ${KC_PORT}
+        published: ${KC_PORT:-8080}
         protocol: tcp
     volumes:
       - ./keycloak/realm.json:/opt/keycloak/data/import/realm.json:ro
@@ -89,7 +89,7 @@ services:
     ports:
       - mode: ingress
         target: 9090
-        published: ${PROMETHEUS_PORT}
+        published: ${PROMETHEUS_PORT:-9090}
         protocol: tcp
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
@@ -108,13 +108,13 @@ services:
       prometheus:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "--tries=1", "--spider", "http://localhost:${GF_SERVER_HTTP_PORT}"]
+      test: ["CMD", "wget", "--tries=1", "--spider", "http://localhost:${GF_SERVER_HTTP_PORT:-3000}"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 5s
     environment:
-      GF_SERVER_HTTP_PORT: ${GF_SERVER_HTTP_PORT}
+      GF_SERVER_HTTP_PORT: ${GF_SERVER_HTTP_PORT:-3000}
       GF_AUTH_BASIC_ENABLED: true
       GF_AUTH_DISABLE_LOGIN_FORM: true
       GF_AUTH_GENERIC_OAUTH_TLS_SKIP_VERIFY_INSECURE: true
