@@ -19,6 +19,7 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
+    # temporary 95 Mb volume for Postgres data
     volumes:
       - type: tmpfs
         target: /var/lib/postgresql/data
