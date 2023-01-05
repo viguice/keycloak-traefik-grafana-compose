@@ -18,7 +18,7 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
-    tmpfs:
+    volumes:
       - type: tmpfs
         target: /var/lib/postgresql/data
         tmpfs:
