@@ -17,8 +17,11 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data
+    tmpfs:
+      - type: tmpfs
+        target: /var/lib/postgresql/data
+        tmpfs:
+          size: 100000000
     deploy:
       resources:
         limits:
@@ -121,9 +124,7 @@ services:
       GF_AUTH_GENERIC_OAUTH_TOKEN_URL: ${KC_URL}/realms/${KC_REALM_NAME}/protocol/openid-connect/token
       GF_AUTH_GENERIC_OAUTH_API_URL: ${KC_URL}/realms/${KC_REALM_NAME}/protocol/openid-connect/userinfo
     volumes:
-      - ./grafana/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
-      - ./grafana/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml:ro
-      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards/keycloak:ro
+      - ./grafana:/etc/grafana/provisioning:ro
     deploy:
       resources:
         limits:
