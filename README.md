@@ -1,4 +1,4 @@
-1. Requires [Docker](https://docs.docker.com/engine/install/) with [Compose](https://docs.docker.com/compose/install/)
+1. Requires [docker](https://docs.docker.com/get-docker/) with [compose](https://docs.docker.com/compose/install/)
 2. Parameterized using variables in the [`.env`](.env) file
 3. Up the project using command:
 ```sh
