@@ -9,6 +9,7 @@
       "clientId": "grafana",
       "name": "grafana",
       "enabled": true,
+      "publicClient": true,
       "rootUrl": "${GF_URL}",
       "adminUrl": "${GF_URL}",
       "baseUrl": "${GF_URL}",
