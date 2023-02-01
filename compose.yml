@@ -34,9 +34,6 @@ services:
     image: "quay.io/keycloak/keycloak:${KC_VERSION:?err}"
     command: ["start-dev", "--import-realm"]
     restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health/ready"]
       start_period: 10s
@@ -101,9 +98,6 @@ services:
     image: "grafana/grafana:${GF_VERSION:?err}"
     restart: unless-stopped
     network_mode: host
-    depends_on:
-      prometheus:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "--spider", "http://localhost:${GF_SERVER_HTTP_PORT}/healthz"]
       interval: 10s
