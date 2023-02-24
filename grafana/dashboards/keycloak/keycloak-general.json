@@ -1322,7 +1322,7 @@
             "uid": "$PROMETHEUS_DS"
           },
           "exemplar": true,
-          "expr": "base_gc_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "jvm_gc_pause_seconds_count{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1614,7 +1614,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "base_thread_count{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "jvm_threads_live_threads{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -3325,7 +3325,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_acquire_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_acquire_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -3464,7 +3464,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_active_count{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_active_count{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -3582,7 +3582,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_max_used_count{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_max_used_count{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -3700,7 +3700,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_available_count{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_available_count{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -3818,7 +3818,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_blocking_time_max_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_blocking_time_max_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -3950,7 +3950,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_flush_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_flush_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -4103,7 +4103,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_leak_detection_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_leak_detection_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -4256,7 +4256,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_creation_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_creation_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -4409,7 +4409,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_destroy_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_destroy_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -4562,7 +4562,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_reap_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_reap_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -4715,7 +4715,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_invalid_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_invalid_count_total{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -4854,7 +4854,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_creation_time_average_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_creation_time_average_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -4972,7 +4972,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_blocking_time_average_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_blocking_time_average_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -5090,7 +5090,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_blocking_time_total_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_blocking_time_total_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -5208,7 +5208,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_creation_time_max_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_creation_time_max_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -5326,7 +5326,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_creation_time_total_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_creation_time_total_seconds{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -5444,7 +5444,7 @@
           "datasource": {
             "uid": "$PROMETHEUS_DS"
           },
-          "expr": "vendor_agroal_awaiting_count{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
+          "expr": "agroal_awaiting_count{env=\"$env\",job=\"$job\",instance=~\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{job}}/{{instance}} ",
@@ -5511,7 +5511,7 @@
         "name": "env",
         "options": [],
         "query": {
-          "query": "label_values(base_thread_count, env)",
+          "query": "label_values(jvm_threads_live_threads, env)",
           "refId": "Prometheus-env-Variable-Query"
         },
         "refresh": 2,
@@ -5540,7 +5540,7 @@
         "name": "job",
         "options": [],
         "query": {
-          "query": "label_values(base_thread_count{env=\"$env\"}, job)",
+          "query": "label_values(jvm_threads_live_threads{env=\"$env\"}, job)",
           "refId": "Prometheus-job-Variable-Query"
         },
         "refresh": 2,
@@ -5569,7 +5569,7 @@
         "name": "instance",
         "options": [],
         "query": {
-          "query": "label_values(base_thread_count{env=\"$env\",job=\"$job\"}, instance)",
+          "query": "label_values(jvm_threads_live_threads{env=\"$env\",job=\"$job\"}, instance)",
           "refId": "Prometheus-instance-Variable-Query"
         },
         "refresh": 2,
