@@ -17,3 +17,5 @@ docker compose up -d --wait
 | Keycloak | 8080 | `admin` | `keycloak` | ![Keycloak Grafana Client in the realm test](.github/images/keycloak.png)
 | Prometheus | 9090 | | | ![Prometheus Targets](.github/images/prometheus.png)
 | Grafana | 3000 | `admin` | `grafana` | ![Grafana Keycloak Dashboard](.github/images/grafana.png)
+
+[![Stargazers over time](https://starchart.cc/eabykov/keycloak-compose.svg)](https://starchart.cc/eabykov/keycloak-compose)
