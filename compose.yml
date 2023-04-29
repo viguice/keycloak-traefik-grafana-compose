@@ -11,8 +11,6 @@ services:
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "keycloak"]
       interval: 10s
-      timeout: 5s
-      retries: 5
       start_period: 5s
     environment:
       POSTGRES_DB: keycloak
@@ -73,8 +71,6 @@ services:
     healthcheck:
       test: ["CMD", "wget", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
       interval: 10s
-      timeout: 5s
-      retries: 5
       start_period: 5s
     ports:
       - ${PROMETHEUS_PORT}:9090
@@ -94,8 +90,6 @@ services:
     healthcheck:
       test: ["CMD", "wget", "--spider", "http://localhost:${GF_SERVER_HTTP_PORT}/healthz"]
       interval: 10s
-      timeout: 5s
-      retries: 5
       start_period: 5s
     environment:
       GF_SERVER_HTTP_PORT: ${GF_SERVER_HTTP_PORT}
