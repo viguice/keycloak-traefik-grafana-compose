@@ -24,7 +24,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 500Mi
+          memory: 500M
           cpus: '0.5'
     logging: *logging
 
@@ -55,7 +55,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 500Mi
+          memory: 500M
           cpus: '0.5'
     logging: *logging
 
@@ -79,7 +79,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 500Mi
+          memory: 500M
           cpus: '0.5'
     logging: *logging
 
@@ -111,6 +111,6 @@ services:
     deploy:
       resources:
         limits:
-          memory: 500Mi
+          memory: 500M
           cpus: '0.5'
     logging: *logging
