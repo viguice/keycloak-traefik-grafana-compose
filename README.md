@@ -18,7 +18,7 @@ docker compose up -d --wait
 
 | App | Host | Username | Password | Image
 |-|-|-|-|-
-| Traefik | http://traefik.localhost/dashboard/#/ | `admin` | `keycloak` | ![Keycloak Grafana Client in the realm test](.github/images/traefik.png)
+| Traefik | http://traefik.localhost/dashboard/#/ | |  | ![Traefik dashboard](.github/images/traefik.png)
 | Keycloak | http://keycloak.localhost | `admin` | `keycloak` | ![Keycloak Grafana Client in the realm test](.github/images/keycloak.png)
 | Prometheus | http://prometheus.localhost | | | ![Prometheus Targets](.github/images/prometheus.png)
 | Grafana | http://grafana.localhost | `admin` | `grafana` | ![Grafana Keycloak Dashboard](.github/images/grafana.png)
