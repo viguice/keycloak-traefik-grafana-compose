@@ -32,26 +32,39 @@ services:
     image: "quay.io/keycloak/keycloak:${KC_VERSION:?err}"
     command: ["start-dev", "--import-realm"]
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:8080/health/ready"]
-      start_period: 10s
+    #Curl is not installed in the latest version. Thus healtcheck must be adapted
+    #healthcheck:
+      #test: ["CMD", "curl", "--fail", "http://localhost:8080/health/ready"]
+      
+      #start_period: 10s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      traefik:
+        condition: service_healthy
     environment:
       KC_DB: postgres
       KC_DB_USERNAME: keycloak
       KC_DB_PASSWORD: password
       KC_DB_URL: "jdbc:postgresql://postgres:5432/keycloak"
-      KC_METRICS_ENABLED: true
-      KC_HEALTH_ENABLED: true
+      #Build and not configuration option -> not sure they are working
+      #KC_METRICS_ENABLED: true
+      #KC_HEALTH_ENABLED: true
       KC_REALM_NAME: ${KC_REALM_NAME}
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-      GF_URL: ${GF_HOSTNAME}:${GF_SERVER_HTTP_PORT}
+      GF_URL: http://${GF_HOSTNAME}:80
       GF_ADMIN_USERNAME: ${GF_ADMIN_USERNAME}
       GF_ADMIN_PASSWORD: ${GF_ADMIN_PASSWORD}
-    ports:
-      - ${KC_PORT}:8080
+      KC_PROXY: edge
     volumes:
       - ./keycloak/realm.json:/opt/keycloak/data/import/realm.json:ro
+    labels:
+      # Explicitly tell Traefik to expose this container
+      - "traefik.enable=true"
+      - "traefik.http.routers.keycloak_local.rule=Host(`${KC_HOSTNAME}`)"
+      - "traefik.http.routers.keycloak_local.entrypoints=web"
+      - "traefik.http.services.keycloak_local.loadbalancer.server.port=8080"
     deploy:
       resources:
         limits:
@@ -72,10 +85,17 @@ services:
       test: ["CMD", "wget", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
       interval: 10s
       start_period: 5s
-    ports:
-      - ${PROMETHEUS_PORT}:9090
+    depends_on:
+      traefik:
+        condition: service_healthy
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    labels:
+      # Explicitly tell Traefik to expose this container
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus_local.rule=Host(`${PROMETHEUS_HOSTNAME}`)"
+      - "traefik.http.routers.prometheus_local.entrypoints=web"
+      - "traefik.http.services.prometheus_local.loadbalancer.server.port=9090"
     deploy:
       resources:
         limits:
@@ -88,11 +108,15 @@ services:
     restart: unless-stopped
     network_mode: host
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:${GF_SERVER_HTTP_PORT}/healthz"]
+      test: ["CMD", "wget", "--spider", "http://localhost:3000/healthz"]
       interval: 10s
       start_period: 5s
+    depends_on:
+      prometheus:
+        condition: service_healthy
     environment:
-      GF_SERVER_HTTP_PORT: ${GF_SERVER_HTTP_PORT}
+      GF_SERVER_ROOT_URL: http://${GF_HOSTNAME}
+      GF_SERVER_SERVE_FROM_SUB_PATH: false
       GF_AUTH_BASIC_ENABLED: true
       GF_AUTH_DISABLE_LOGIN_FORM: true
       GF_AUTH_GENERIC_OAUTH_TLS_SKIP_VERIFY_INSECURE: true
@@ -102,15 +126,77 @@ services:
       GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "grafana"
       GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_NAME: "email:primary"
       GF_AUTH_GENERIC_OAUTH_SCOPES: "openid profile email"
-      GF_AUTH_GENERIC_OAUTH_AUTH_URL: ${KC_HOSTNAME}:${KC_PORT}/realms/${KC_REALM_NAME}/protocol/openid-connect/auth
-      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: ${KC_HOSTNAME}:${KC_PORT}/realms/${KC_REALM_NAME}/protocol/openid-connect/token
-      GF_AUTH_GENERIC_OAUTH_API_URL: ${KC_HOSTNAME}:${KC_PORT}/realms/${KC_REALM_NAME}/protocol/openid-connect/userinfo
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: http://${KC_HOSTNAME}:80/realms/${KC_REALM_NAME}/protocol/openid-connect/auth
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: http://${KC_HOSTNAME}:80/realms/${KC_REALM_NAME}/protocol/openid-connect/token
+      GF_AUTH_GENERIC_OAUTH_API_URL: http://${KC_HOSTNAME}:80/realms/${KC_REALM_NAME}/protocol/openid-connect/userinfo
     volumes:
       - ./grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
       - ./grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    labels:
+      # Explicitly tell Traefik to expose this container
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana_local.rule=Host(`${GF_HOSTNAME}`)"
+      - "traefik.http.routers.grafana_local.entrypoints=web"
+      - "traefik.http.services.grafana_local.loadbalancer.server.port=3000"
     deploy:
       resources:
         limits:
           memory: 500M
           cpus: '0.5'
     logging: *logging
+  traefik:
+    image: "traefik:${TRAEFIK_VERSION:?err}"
+    container_name: traefik
+    command:
+      - "--log.level=DEBUG"
+      - "--api.dashboard=true"
+      - "--metrics.prometheus=true"
+      - "--metrics.prometheus.buckets=0.1,0.3,1.2,5.0"
+      - "--providers.docker=true"
+      - "--accesslog=true"
+      - "--api.insecure=true"
+      - "--ping=true"
+      - "--ping.entrypoint=ping"
+      - "--entryPoints.ping.address=:8082"
+      - "--entryPoints.web.address=:80"
+      - "--providers.docker.exposedByDefault=false"
+      - "--global.checkNewVersion=true"
+      - "--global.sendAnonymousUsage=false"
+
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    ports:
+      - "80:80"
+    healthcheck:
+      test: ["CMD", "wget", "http://localhost:8082/ping","--spider"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    labels:
+      # Explicitly tell Traefik to expose this container
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard_local.rule=Host(`${TRAEFIK_HOSTNAME}`)"
+      - "traefik.http.routers.dashboard_local.entrypoints=web"
+      - "traefik.http.services.dashboard_local.loadbalancer.server.port=8080"
+      - "traefik.http.routers.dashboard_local.service=api@internal"
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+        
+        
+  whoami:
+    image: "traefik/whoami"
+    container_name: "whoami"
+    labels:
+      # Explicitly tell Traefik to expose this container
+      - "traefik.enable=true"
+      # The domain the service will respond to
+      - "traefik.http.routers.whoami_local.rule=Host(`${WHOAMI_HOSTNAME}`)"
+      - "traefik.http.routers.whoami_local.entrypoints=web"
+    restart: unless-stopped
+    depends_on:
+      traefik:
+        condition: service_healthy
