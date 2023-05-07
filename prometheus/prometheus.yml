@@ -12,4 +12,5 @@ scrape_configs:
   - job_name: keycloak
     metrics_path: /metrics
     static_configs:
-      - targets: ['keycloak.localhost:80']
+      - targets:
+        - keycloak:8080
