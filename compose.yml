@@ -48,8 +48,8 @@ services:
       KC_DB_PASSWORD: password
       KC_DB_URL: "jdbc:postgresql://postgres:5432/keycloak"
       #Build and not configuration option -> not sure they are working
-      #KC_METRICS_ENABLED: true
-      #KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: true
+      KC_HEALTH_ENABLED: true
       KC_REALM_NAME: ${KC_REALM_NAME}
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
