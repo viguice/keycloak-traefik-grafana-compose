@@ -1,5 +1,5 @@
 Fork from https://github.com/eabykov/keycloak-compose.git
-The original project was not working for me (On the WSL 2 Grafana dont starts issue). So my idea is to use traefik for making the solution more flexible and more robust.
+The original project was not working for me (On the WSL 2 Grafana dont start issue). So my idea is to use traefik for making the solution more flexible and more robust.
 But it is not working yet: Grafana returns status 502 "Bad gateway"
 
 1. Requires [docker](https://docs.docker.com/get-docker/) with [compose](https://docs.docker.com/compose/install/)
