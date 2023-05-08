@@ -23,7 +23,5 @@ docker compose up -d --wait
 | Prometheus | http://prometheus.localhost | | | ![Prometheus Targets](.github/images/prometheus.png)
 | Grafana | http://grafana.localhost | `admin` | `grafana` | ![Grafana Keycloak Dashboard](.github/images/grafana.png)
 
-Stargazers over time
 
-[![Stargazers over time](https://starchart.cc/eabykov/keycloak-compose.svg)](https://starchart.cc/eabykov/keycloak-compose)
 
