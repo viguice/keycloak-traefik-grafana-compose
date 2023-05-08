@@ -9,7 +9,7 @@ But it is not working yet: Grafana returns status 502 "Bad gateway"
 docker compose up -d --wait
 ```
 
-| Useful commands | Discription
+| Useful commands | Description
 |-|-
 | `docker stats` | Containers resource usage (`--no-stream` only pull the first result)
 | `docker compose logs` | Shows logs of containers (`-f` to follow logs)
